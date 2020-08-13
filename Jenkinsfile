@@ -172,7 +172,7 @@ node {
             // -------------------------------------------------------------------------
  
             stage('Run Tests In Package Install Scratch Org') {
-                rc = command "${toolbelt}/sfdx force:apex:test:run --targetusername installorg --resultformat tap --codecoverage --testlevel ${TEST_LEVEL} --wait 10"
+                rc = command "${toolbelt} force:apex:test:run --targetusername installorg --resultformat tap --codecoverage --testlevel ${TEST_LEVEL} --wait 10"
                 if (rc != 0) {
                     error 'Salesforce unit test run in pacakge install scratch org failed.'
                 }
@@ -184,7 +184,7 @@ node {
             // -------------------------------------------------------------------------
  
             stage('Delete Package Install Scratch Org') {
-                rc = command "${toolbelt}/sfdx force:org:delete --targetusername installorg --noprompt"
+                rc = command "${toolbelt} force:org:delete --targetusername installorg --noprompt"
                 if (rc != 0) {
                     error 'Salesforce package install scratch org deletion failed.'
                 }
