@@ -29,7 +29,7 @@ node {
     // JWT key credentials.
     // -------------------------------------------------------------------------
     
-    withEnv(["HOME=${env.WORKSPACE}"]) {
+   
         
         withCredentials([file(credentialsId: SERVER_KEY_CREDENTALS_ID, variable: 'server_key_file')]) {
  
@@ -189,7 +189,7 @@ node {
                     error 'Salesforce package install scratch org deletion failed.'
                 }
             }
-        }
+        
     }
 }
  
