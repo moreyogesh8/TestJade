@@ -25,9 +25,9 @@ node {
 		stage('Create Package Version') {
 				println SFDC_HOST
                 if (isUnix()) {
-                    output = sh returnStdout: true, script: "${toolbelt}/sfdx force:package:version:create --package ${PACKAGE_NAME} --installationkeybypass --wait 10 --json -setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
+                    output = sh returnStdout: true, script: "${toolbelt}/sfdx force:package:version:create --package ${PACKAGE_NAME} --installationkeybypass --wait 10 --json -setdefaultdevhubusername ${SFDC_HOST}"
                 } else {
-                    output = bat(returnStdout: true, script: "\"${toolbelt}\" force:package:version:create --package ${PACKAGE_NAME} --installationkeybypass --wait 10 --json -setdefaultdevhubusername --instanceurl ${SFDC_HOST}").trim()
+                    output = bat(returnStdout: true, script: "\"${toolbelt}\" force:package:version:create --package ${PACKAGE_NAME} --installationkeybypass --wait 10 --json -setdefaultdevhubusername ${SFDC_HOST}").trim()
                     output = output.readLines().drop(1).join(" ")
                 }
  
