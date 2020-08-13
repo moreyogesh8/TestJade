@@ -22,27 +22,7 @@ node {
     }
 
     withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
-		stage('Create Package Version') {
-				println SFDC_HOST
-                if (isUnix()) {
-                    output = sh returnStdout: true, script: "${toolbelt}/sfdx force:package:version:create --package ${PACKAGE_NAME} --installationkeybypass --wait 10 --json"
-                } else {
-                    output = bat(returnStdout: true, script: "\"${toolbelt}\" force:package:version:create --package ${PACKAGE_NAME} --installationkeybypass --wait 10 --json")
-                    output = output.readLines().drop(1).join(" ")
-                }
- 
-                // Wait 5 minutes for package replication.
-                sleep 300
- 
-                def jsonSlurper = new JsonSlurperClassic()
-                def response = jsonSlurper.parseText(output)
- 
-                PACKAGE_VERSION = response.result.SubscriberPackageVersionId
- 
-                response = null
- 
-                echo ${PACKAGE_VERSION}
-            }
+		
         stage('Deploye Code') {
             if (isUnix()) {
                 rc = sh returnStatus: true, script: "${toolbelt} force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile ${jwt_key_file} --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
